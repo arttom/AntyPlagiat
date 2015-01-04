@@ -238,7 +238,7 @@ public class PlagiarismChecker {
         removeSearchPhrasesAbove100();
         negativePhrases=new LinkedList<String>();
         for(String s:searchPhrases){
-            if(GoogleSearcher.getNumberOfResultsDumb(s)>0){
+            if(GoogleSearcher.getNumberOfResults(s)>0){
                 negativePhrases.add(s);
             }
         }

@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="google-api-services-customsearch-v1-rev46-1.19.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/customsearch/google-api-services-customsearch-v1-rev46-1.19.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/customsearch/libs/google-http-client-jackson2-1.19.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/customsearch/libs/google-http-client-1.19.0.jar!/" />
+      <root url="file://$PROJECT_DIR$/libs/customsearch/libs" />
+      <root url="jar://$PROJECT_DIR$/libs/jsoup-1.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/controlsfx-8.20.8/controlsfx-8.20.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/pdfbox-app-1.8.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/libs/customsearch/libs/jsr305-1.3.9.jar!/" />
+      <root url="file://$PROJECT_DIR$/libs/customsearch/libs" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/libs/customsearch/libs" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/libs/customsearch/libs" recursive="false" type="SOURCES" />
+  </library>
+</component>

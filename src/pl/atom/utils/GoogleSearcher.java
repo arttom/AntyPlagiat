@@ -69,15 +69,4 @@ public class GoogleSearcher {
         }
         return resultList.size();
     }
-
-    /**
-     * Zaślepka do testów zamiast getNumberOfResult
-     * @param s - wyszukiwany tekst
-     * @return - losowa wartość określająca liczbę znalezonych zapytań
-     * @throws SearchException - nie wyrzuca. Dodane aby było tożsame z getNumberOfResult
-     */
-    public static int getNumberOfResultsDumb(String s) throws SearchException{
-        Random random=new Random();
-        return random.nextInt(2);
-    }
 }
