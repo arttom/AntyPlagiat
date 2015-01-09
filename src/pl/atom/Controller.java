@@ -15,7 +15,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.controlsfx.dialog.Dialogs;
 import pl.atom.links.LinksController;
 import pl.atom.utils.SearchException;
-import pl.atom.utils.TextProcessor;
 import org.apache.pdfbox.util.PDFTextStripper;
 import pl.atom.utils.TxtFileReaderToText;
 
