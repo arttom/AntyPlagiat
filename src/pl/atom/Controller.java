@@ -8,32 +8,52 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.controlsfx.dialog.Dialogs;
 import pl.atom.links.LinksController;
 import pl.atom.utils.SearchException;
-import org.apache.pdfbox.util.PDFTextStripper;
 import pl.atom.utils.TxtFileReaderToText;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Klasa która zarządza GUI
  */
 public class Controller {
+    /**
+     * Przycisk pozwalający na sprawdzenie tekstu pod kątem plagiatu.
+     */
     public Button checkButton;
+    /**
+     * Kontener na obiekty graficzne interfejsu użtkownika
+     */
     public Pane pane;
+    /**
+     * Kontener na pole tekstowe pozwalający na przesuwanie.
+     */
     public ScrollPane scrollPane;
+    /**
+     * Kontener na pole Menu
+     */
     public MenuBar menuBar;
+    /**
+     * Element menu odpowiedzialny za otwarcie okna z linkami
+     */
     public MenuItem showLinksMenuItem;
+    /**
+     * Pole tekstowe aplikacji
+     */
     public TextArea textField;
+    /**
+     * Główna scena aplikacji
+     */
     private Stage stage;
+    /**
+     * Lista łańcuchów tekstowych odnalezionych w Internecie
+     */
     private List<String> negativeStringList;
 
     public void Controller() {
@@ -41,7 +61,7 @@ public class Controller {
     }
 
     /**
-     * Funkcja zarządzająca obiektami w razie zmiany rozmiaru oknia w poziomie
+     * Metoda zarządzająca obiektami w razie zmiany rozmiaru oknia w poziomie
      */
     private void widthResize() {
         double width = stage.getWidth();
@@ -54,7 +74,7 @@ public class Controller {
     }
 
     /**
-     * Funkcja zarządzająca obietakmi w razie zmiany rozmiaru okna w pionie
+     * Metoda zarządzająca obietakmi w razie zmiany rozmiaru okna w pionie
      */
     private void heightResize() {
         double height = stage.getHeight();
@@ -65,7 +85,7 @@ public class Controller {
     }
 
     /**
-     * Fukcja ustawiająca scenę kontrolera. Dodatkowo przypisuje jej operacje zmiany rozmiaru okna.
+     * Metoda ustawiająca scenę kontrolera. Dodatkowo przypisuje jej operacje zmiany rozmiaru okna.
      * @param stage - Główna scena aplikacji
      */
     public void setStage(Stage stage) {
@@ -84,11 +104,11 @@ public class Controller {
         });
         stage.setMinWidth(300);
         stage.setMinHeight(300);
+        textField.setWrapText(true);
     }
 
     /**
-     * Funkcja wywołująca sprawdzenie wprowadzonego tekstu oraz wyświetlająca jego wynik dla użytkownika.
-     * @param actionEvent
+     * Metoda wywołująca sprawdzenie wprowadzonego tekstu oraz wyświetlająca jego wynik dla użytkownika.
      */
     public void check(ActionEvent actionEvent) {
         String text = textField.getText();
@@ -116,7 +136,7 @@ public class Controller {
     }
 
     /**
-     * Utworzenie okna z błędem
+     * Metoda tworząca okno z błędem
      * @param title - tytuł okna
      * @param message - wiadomość okna
      */
@@ -130,7 +150,7 @@ public class Controller {
     }
 
     /**
-     * Utworzenie okna z informacją
+     * Metoda tworząca okno z informacją
      * @param title - tytuł okna
      * @param message - wiadomość okna
      */
@@ -145,16 +165,14 @@ public class Controller {
     }
 
     /**
-     * zamknięcie głównej sceny
-     * @param actionEvent
+     * Metoda zamykająca główną scenę
      */
     public void close(ActionEvent actionEvent) {
         stage.close();
     }
 
     /**
-     * Funkcja wyświetlająca nowe okno z linkami do zapytań które zostały odnalezione w trakcie sprawdzania w sieci.
-     * @param actionEvent
+     * Metoda wyświetlająca nowe okno z linkami do zapytań które zostały odnalezione w trakcie sprawdzania w sieci.
      */
     public void showLinks(ActionEvent actionEvent) {
         Stage linksStage = new Stage();
@@ -173,8 +191,7 @@ public class Controller {
     }
 
     /**
-     * Wyświetlenie informacji o aplikacji
-     * @param actionEvent
+     * Metoda wyświetlająca informację o aplikacji
      */
     public void showAbout(ActionEvent actionEvent) {
         //TODO
@@ -187,18 +204,21 @@ public class Controller {
     }
 
     /**
-     * Wyświetlenie okna pomocy
-     * @param actionEvent
+     * Metoda wyświetlająca okno pomocy
      */
     public void showHelp(ActionEvent actionEvent) {
-        String message="Tekst można wprowadzić z dowolnego źródła. Może on zawierać obrazki oraz inne obiekty " +
-                "jednak należy mieć na uwadze, że aplikacja sprawdza jedynie tekst, a wszelkie inne obiekty oraz znaki formatujące to utrudniają. "+
+        String message="Tekst można wkleić z dowolnego źródła. Może on zawierać obrazki oraz inne obiekty " +
+                "jednak należy mieć na uwadze, że nie zostaną one wyświetlone ani sprawdzone, a wszelkie inne obiekty oraz znaki formatujące to utrudniają. " +
+                "Można również otwierać pliki tekstowe .txt co może ułatwiać wprowadzenie tekstu."+
                 "Dodatkowo ze względu na ograniczenie bezpłatnej wersji nałożony jest limit na 100 wyszukiwań na dzień." +
                 "W przypadku, gdy tekst zawierałby więcej niż 100 fraz wyszukiwania wybrane zostanie jedynie 100. " +
                 "Po przekroczeniu limitu należy czekać do dnia następnego. Opcja wyświetlenia linków jest dostępna dopiero po przeanalizowaniu jakiegoś tekstu.";
         createDialog("Pomoc", message);
     }
 
+    /**
+     * Metoda pozwalająca otworzyć plik tekstowy i wprowadzić go do pola tekstowego.
+     */
     public void openFile(ActionEvent actionEvent) {
         FileChooser fc=new FileChooser();
         fc.setTitle("Select TXT file");

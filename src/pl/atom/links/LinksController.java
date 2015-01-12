@@ -3,13 +3,10 @@ package pl.atom.links;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,17 +14,27 @@ import java.util.List;
  * Created by Artur Tomaszewski on 2014-11-25.
  */
 public class LinksController {
-
+    /**
+     * Kontener graficzny do umieszczenia hiperłączy
+     */
     public VBox linksBox;
-    private double HYPERLINK_HEIGHT=24;
-    List<String> negativeStringList;
+    private final double HYPERLINK_HEIGHT=24;
+    /**
+     * Lista łańcuchów tekstowych zawierających teksty fraz które zostały odnalezione w Internecie
+     */
+    private List<String> negativeStringList;
+
+    /**
+     * Setter ustawiający linki
+     * @param negativeStringsList - lista łańcuchów tekstowych zawierających frazy odnalezione w Internecie
+     */
     public void setLinksList(List<String> negativeStringsList){
         this.negativeStringList=negativeStringsList;
         createHyperlinks();
     }
 
     /**
-     * Utworzenie hiperłączy do google na GUI
+     * Metoda tworząca hiperłącza do google na GUI.
      */
     private void createHyperlinks() {
         int i=0;

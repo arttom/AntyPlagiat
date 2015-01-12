@@ -2,7 +2,9 @@ package pl.atom;
 
 import pl.atom.punctuations.PunctuationMarksTypeAndPlace;
 import pl.atom.utils.GoogleSearcher;
+import pl.atom.utils.GoogleSearcherMOK;
 import pl.atom.utils.SearchException;
+import pl.atom.utils.Searcher;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,10 +22,12 @@ public class PlagiarismChecker {
     private LinkedList<String> searchPhrases; //lista fraz wyszukiwania
     private LinkedList<String> negativePhrases; //lista znalezionych fraz w trakcie wyszukiwania
     private String textToCheck; //tekst do sprawdzenia
-    private int wordsBeforeColonsAndComa = 3; //liczba słów przed średnikiem, dwukropkiem i przecinkiem
-    private int wordsBeforeQuestionAndExclamationMark = 6; //liczba słów przed znakiem zapytania i wykrzyknienia
-    private int wordsAfterDot = 6; //liczba słów po kropce
-    private int wordsAfterColonsAndComa = 3; //liczba słów po średniku, dwukropku i przecinku
+    private Searcher searcher; //wyszukiwacz, póki co jest jedynie Google.
+    private int phrasesLimit=100; //pole określające limit fraz
+    private final int wordsBeforeColonsAndComa = 3; //liczba słów przed średnikiem, dwukropkiem i przecinkiem
+    private final int wordsBeforeQuestionAndExclamationMark = 6; //liczba słów przed znakiem zapytania i wykrzyknienia
+    private final int wordsAfterDot = 6; //liczba słów po kropce
+    private final int wordsAfterColonsAndComa = 3; //liczba słów po średniku, dwukropku i przecinku
 
     public LinkedList<String> getSearchPhrases() {
         return searchPhrases;
@@ -36,6 +40,7 @@ public class PlagiarismChecker {
      * @throws SearchException - wyjątek w przypadku błędu wyszukiwania
      */
     public List<String> checkTextForPlagiarism(String text) throws SearchException {
+        searcher = new GoogleSearcherMOK();
         this.textToCheck=text;
         punctuationMarksTypeAndPlaceList=new LinkedList<PunctuationMarksTypeAndPlace>();
         removeQuotation();
@@ -48,7 +53,13 @@ public class PlagiarismChecker {
      * Usunięcie z tekstu fragmentów które są pomiędzy cytatami. Nie obsługuje cytatów zagnieżdżonych
      */
     private void removeQuotation() {
-        this.textToCheck.replaceAll("\"(.*?)\"","");
+        this.textToCheck=this.textToCheck.replaceAll("\"(.*?)\"","");
+        this.textToCheck=this.textToCheck.replace(" . ",". ");
+        this.textToCheck=this.textToCheck.replace(" , ",". ");
+        this.textToCheck=this.textToCheck.replace(" ! ",". ");
+        this.textToCheck=this.textToCheck.replace(" ? ",". ");
+        this.textToCheck=this.textToCheck.replace(" ; ",". ");
+        this.textToCheck=this.textToCheck.replace(" : ",". ");
     }
 
     /**
@@ -74,8 +85,8 @@ public class PlagiarismChecker {
     private void createPhrases() {
         searchPhrases=new LinkedList<String>();
         StringBuilder tempPhrase = new StringBuilder("");
-        if(wordsFromText.length>6) {
-            for(int i=0;i<6;i++){
+        if(wordsFromText.length>wordsAfterDot) {
+            for(int i=0;i<wordsAfterDot;i++){
                 tempPhrase.append(wordsFromText[i]+" ");
 
             }
@@ -147,7 +158,7 @@ public class PlagiarismChecker {
         findDots();
         findComas();
         findQuestionMarks();
-        findExclamationMark();
+        findExclamationMarks();
         findSemiColons();
         findColons();
     }
@@ -188,7 +199,7 @@ public class PlagiarismChecker {
     /**
      * Funkcja odnajdująca znaki wykrzyknienia
      */
-    private void findExclamationMark() {
+    private void findExclamationMarks() {
         for(int i=0;i<wordsFromText.length;i++) {
             if (wordsFromText[i].contains("!") && i>wordsBeforeQuestionAndExclamationMark) {
                     punctuationMarksTypeAndPlaceList.add(new PunctuationMarksTypeAndPlace(EXCLAMATION_MARK, i));
@@ -235,10 +246,10 @@ public class PlagiarismChecker {
      * @throws SearchException - w przypadku błędów z wyszukiwaniem tj. błędna konfiguracja, koniec limitu
      */
     private void searchPhrases() throws SearchException {
-        removeSearchPhrasesAbove100();
+        removeSearchPhrasesAboveLimit();
         negativePhrases=new LinkedList<String>();
         for(String s:searchPhrases){
-            if(GoogleSearcher.getNumberOfResults(s)>0){
+            if(searcher.getNumberOfResults(s)>0){
                 negativePhrases.add(s);
             }
         }
@@ -248,8 +259,8 @@ public class PlagiarismChecker {
     /**
      * Ze względu na limit google pozostawienie jedynie 99 fraz.
      */
-    private void removeSearchPhrasesAbove100() {
-        while(searchPhrases.size()>99){
+    private void removeSearchPhrasesAboveLimit() {
+        while(searchPhrases.size()>=phrasesLimit){
             searchPhrases.removeLast();
         }
     }

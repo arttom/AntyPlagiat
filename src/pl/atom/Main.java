@@ -6,6 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Główna klasa aplikacji ładująca klasę Kontrolera i tworząca scenę.
+ */
 public class Main extends Application {
 
     @Override

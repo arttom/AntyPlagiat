@@ -3,6 +3,7 @@ package pl.atom.utils;
 import java.io.*;
 
 /**
+ * Klasa do otwierania plików typu TXT implementująca interfejs FileReaderToText
  * Created by Artur Tomaszewski on 2014-12-22.
  */
 public class TxtFileReaderToText implements FileReaderToText {

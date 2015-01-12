@@ -10,6 +10,10 @@ import java.net.URISyntaxException;
  * Created by Artur Tomaszewski on 2014-11-25.
  */
 public class URLOpener {
+    /**
+     * Metoda otwierająca link za pomocą domyślnej przeglądarki systemowej.
+     * @param url - łańcuch tekstowy zawierający link
+     */
     public static void openURL(String url){
         try {
             Desktop.getDesktop().browse(new URI(url));
