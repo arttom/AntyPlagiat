@@ -2,7 +2,7 @@ package pl.atom;
 
 import pl.atom.punctuations.PunctuationMarksTypeAndPlace;
 import pl.atom.utils.GoogleSearcher;
-import pl.atom.utils.GoogleSearcherMOK;
+import pl.atom.utils.SearcherMOK;
 import pl.atom.utils.SearchException;
 import pl.atom.utils.Searcher;
 
@@ -22,8 +22,13 @@ public class PlagiarismChecker {
     private LinkedList<String> searchPhrases; //lista fraz wyszukiwania
     private LinkedList<String> negativePhrases; //lista znalezionych fraz w trakcie wyszukiwania
     private String textToCheck; //tekst do sprawdzenia
+
+    public String getTextToCheck() {
+        return textToCheck;
+    }
+
     private Searcher searcher; //wyszukiwacz, póki co jest jedynie Google.
-    private int phrasesLimit=100; //pole określające limit fraz
+    private int phrasesLimit; //pole określające limit fraz
     private final int wordsBeforeColonsAndComa = 3; //liczba słów przed średnikiem, dwukropkiem i przecinkiem
     private final int wordsBeforeQuestionAndExclamationMark = 6; //liczba słów przed znakiem zapytania i wykrzyknienia
     private final int wordsAfterDot = 6; //liczba słów po kropce
@@ -40,7 +45,10 @@ public class PlagiarismChecker {
      * @throws SearchException - wyjątek w przypadku błędu wyszukiwania
      */
     public List<String> checkTextForPlagiarism(String text) throws SearchException {
-        searcher = new GoogleSearcherMOK();
+       if(searcher==null){
+           searcher=new SearcherMOK();
+           phrasesLimit=100;
+       }
         this.textToCheck=text;
         punctuationMarksTypeAndPlaceList=new LinkedList<PunctuationMarksTypeAndPlace>();
         removeQuotation();
@@ -263,6 +271,22 @@ public class PlagiarismChecker {
         while(searchPhrases.size()>=phrasesLimit){
             searchPhrases.removeLast();
         }
+        cutText();
+    }
+
+    private void cutText() {
+        int lastPhrasePlace=getLastPhrase();
+        textToCheck=textToCheck.substring(0,lastPhrasePlace);
+        textToCheck=textToCheck+searchPhrases.getLast();
+    }
+
+    private int getLastPhrase() {
+        int place=0;
+        for(String s:searchPhrases){
+            int i=textToCheck.lastIndexOf(s);
+            if(i>place) place=i;
+        }
+        return place;
     }
 
     /**
@@ -279,5 +303,10 @@ public class PlagiarismChecker {
      */
     public int getNegativePhrasesNumber(){
         return negativePhrases.size();
+    }
+
+    public void setGoogleSearcher(int limit) {
+        searcher=new GoogleSearcher();
+        this.phrasesLimit=limit;
     }
 }

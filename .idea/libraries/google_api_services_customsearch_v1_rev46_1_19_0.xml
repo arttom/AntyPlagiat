@@ -7,7 +7,7 @@
       <root url="file://$PROJECT_DIR$/libs/customsearch/libs" />
       <root url="jar://$PROJECT_DIR$/libs/jsoup-1.8.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/libs/controlsfx-8.20.8/controlsfx-8.20.8.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/pdfbox-app-1.8.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-io-2.4-bin/commons-io-2.4/commons-io-2.4.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

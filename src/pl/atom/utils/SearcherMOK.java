@@ -14,7 +14,7 @@ import java.util.Random;
 /**
  * Klasa implementująca interfejs Searcher zastępująca klasę GoogleSearcher wyszukującą w testach.
  */
-public class GoogleSearcherMOK implements Searcher{
+public class SearcherMOK implements Searcher{
     /**
      * Zaślepka do testów zamiast getNumberOfResult klasy GoogleSearcher
      * @param s - wyszukiwany tekst

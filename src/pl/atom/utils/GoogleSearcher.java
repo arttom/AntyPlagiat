@@ -50,6 +50,9 @@ public class GoogleSearcher implements Searcher{
         }catch (Exception e) {
             throw new SearchException("Error during search operation. Please Repeat. If this doesn't help you probably used daily limit. If tommorow error still occurs. Please contact author.");
         }
-        return resultList.size();
+        if(resultList!=null){
+            return resultList.size();
+        } else return 0;
+
     }
 }

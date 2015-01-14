@@ -20,6 +20,12 @@
                   <MenuItem fx:id="showLinksMenuItem" disable="true" mnemonicParsing="false" onAction="#showLinks" text="Wyświetl linki" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Wybór wyszukiwarki">
+               <items>
+                  <RadioMenuItem fx:id="googleRadioItem" mnemonicParsing="false" text="Google" />
+                  <RadioMenuItem fx:id="otherRadioItem" mnemonicParsing="false" text="Inna" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Pomoc">
             <items>
               <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" onAction="#showAbout" text="O programie" />

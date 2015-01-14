@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import pl.atom.links.LinksController;
+import pl.atom.utils.FileReaderToText;
 import pl.atom.utils.SearchException;
 import pl.atom.utils.TxtFileReaderToText;
 
@@ -47,6 +48,8 @@ public class Controller {
      * Pole tekstowe aplikacji
      */
     public TextArea textField;
+    public RadioMenuItem googleRadioItem;
+    public RadioMenuItem otherRadioItem;
     /**
      * Główna scena aplikacji
      */
@@ -55,9 +58,11 @@ public class Controller {
      * Lista łańcuchów tekstowych odnalezionych w Internecie
      */
     private List<String> negativeStringList;
-
+    /**
+     * Pole z klasą dokonującą sprawdzenia tekstu.
+     */
+    PlagiarismChecker plagiarismChecker;
     public void Controller() {
-
     }
 
     /**
@@ -104,7 +109,6 @@ public class Controller {
         });
         stage.setMinWidth(300);
         stage.setMinHeight(300);
-        textField.setWrapText(true);
     }
 
     /**
@@ -113,8 +117,9 @@ public class Controller {
     public void check(ActionEvent actionEvent) {
         String text = textField.getText();
         if (text != null && text.length() > 0) {
-            PlagiarismChecker plagiarismChecker = new PlagiarismChecker();
             try {
+                plagiarismChecker = new PlagiarismChecker();
+                setSearcher();
                 negativeStringList = plagiarismChecker.checkTextForPlagiarism(text);
                 int negativePhrasesNumber = plagiarismChecker.getNegativePhrasesNumber();
                 int totalPhrasesNumber = plagiarismChecker.getSearchPhrasesNumber();
@@ -123,6 +128,7 @@ public class Controller {
                     String message = "W wyniku sprawdzenia wykryto, że " + String.valueOf(percentageValue) + "% fraz z tekstu zostało znalezionych za pomocą wyszukiwarki.";
                     createDialog("Wynik sprawdzenia", message);
                     showLinksMenuItem.setDisable(false);
+                    textField.setText(plagiarismChecker.getTextToCheck());
                 }
                 else{
                     createDialog("Brak fraz do wyszukiwania", "Na podstawie wprowadzonego tekstu nie utworzono żadnych fraz do wyszukania");
@@ -133,6 +139,15 @@ public class Controller {
         } else {
             createDialog("Brak tekstu", "Brak wprowadzonego tekstu do sprawdzenia");
         }
+    }
+
+    private void setSearcher() {
+       if(googleRadioItem.isSelected()){
+           plagiarismChecker.setGoogleSearcher(100);
+       } else {
+           createDialog("Nie wspierana wyszukiwarka","Wybrana wyszukiwarka nie jest jeszcze wspierana." +
+                   "Zamiast tego użyta zostanie wyszukiwarka testowa.");
+       }
     }
 
     /**
@@ -194,7 +209,6 @@ public class Controller {
      * Metoda wyświetlająca informację o aplikacji
      */
     public void showAbout(ActionEvent actionEvent) {
-        //TODO
         String message="Program pozwala na sprawdzenie czy fragmenty pracy pochodzą z tekstów innych prac. W tym" +
                 " celu aplikacja wybiera z tekstu frazy do wyszukiwania i następnie sprawdza" +
                 "czy wynik wyszukiwania zwraca jakieś wyniki. Jeśli tak fraza taka jest oznaczana jako negatywna" +
@@ -217,17 +231,30 @@ public class Controller {
     }
 
     /**
-     * Metoda pozwalająca otworzyć plik tekstowy i wprowadzić go do pola tekstowego.
+     * Metoda pozwalająca otworzyć plik i wprowadzić go do pola tekstowego.
      */
     public void openFile(ActionEvent actionEvent) {
         FileChooser fc=new FileChooser();
-        fc.setTitle("Select TXT file");
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT","*.txt"));
+        fc.setTitle("Select file:");
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("any", "*.*"));
         File file=fc.showOpenDialog(this.stage);
+        FileReaderToText fileReader;
         if(file!=null){
-                TxtFileReaderToText txtReader=new TxtFileReaderToText();
-                String text=txtReader.getTextFromFile(file);
-                textField.setText(text);
+                if(file.getName().endsWith(".txt")) {
+                    fileReader = new TxtFileReaderToText();
+                    String text = fileReader.getTextFromFile(file);
+                    textField.setText(text);
+                } else {
+                    createDialog("Format nie wspierany","Format pliku nie jest jeszcze wspierany. Proszę wybrać plik tekstowy.");
+                }
         }
+    }
+
+    public void initialize() {
+        textField.setWrapText(true);
+        ToggleGroup group=new ToggleGroup();
+        googleRadioItem.setToggleGroup(group);
+        otherRadioItem.setToggleGroup(group);
+        googleRadioItem.setSelected(true);
     }
 }

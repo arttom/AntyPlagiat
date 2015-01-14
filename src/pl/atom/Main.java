@@ -16,6 +16,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("frame.fxml"));
         Parent root = loader.load();
         Controller controller=loader.getController();
+        controller.initialize();
         controller.setStage(primaryStage);
         primaryStage.setTitle("AntyPlagiat");
         primaryStage.setScene(new Scene(root, 600, 400));
