@@ -268,10 +268,12 @@ public class PlagiarismChecker {
      * Ze względu na limit google pozostawienie jedynie 99 fraz.
      */
     private void removeSearchPhrasesAboveLimit() {
-        while(searchPhrases.size()>=phrasesLimit){
-            searchPhrases.removeLast();
+        if(phrasesLimit!=0) {
+            while (searchPhrases.size() >= phrasesLimit) {
+                searchPhrases.removeLast();
+            }
+            cutText();
         }
-        cutText();
     }
 
     private void cutText() {

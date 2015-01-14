@@ -199,10 +199,19 @@ public class Controller {
             e.printStackTrace();
         }
         LinksController controller = loader.getController();
+        controller.setSearcher(getSearcherName());
         controller.setLinksList(negativeStringList);
         linksStage.setTitle("Linki");
         linksStage.setScene(new Scene(root, 400, 300));
         linksStage.show();
+    }
+
+    private String getSearcherName() {
+        if(googleRadioItem.isSelected()){
+            return "Google";
+        } else {
+            return "Other";
+        }
     }
 
     /**
