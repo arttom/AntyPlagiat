@@ -22,7 +22,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Wybór wyszukiwarki">
                <items>
-                  <RadioMenuItem fx:id="googleRadioItem" mnemonicParsing="false" text="Google" />
+                  <RadioMenuItem fx:id="googleRadioItem" mnemonicParsing="false" selected="true" text="Google" />
                   <RadioMenuItem fx:id="otherRadioItem" mnemonicParsing="false" text="Inna" />
                </items>
             </Menu>

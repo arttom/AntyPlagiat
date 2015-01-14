@@ -54,7 +54,14 @@ public class PlagiarismChecker {
         removeQuotation();
         createSearchPhrases();
         searchPhrases();
+        highlightPhrases();
         return negativePhrases;
+    }
+
+    private void highlightPhrases() {
+        for(String s:negativePhrases){
+            textToCheck=textToCheck.replace(s,s.toUpperCase());
+        }
     }
 
     /**
