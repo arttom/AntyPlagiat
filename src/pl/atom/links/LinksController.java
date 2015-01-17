@@ -71,6 +71,10 @@ public class LinksController {
         }
     }
 
+    /**
+     * Pozwala ustawić wyszukiwarkę do której generowane są linki
+     * @param searcherName
+     */
     public void setSearcher(String searcherName) {
         if(searcherName.equals("Google")){
             this.searcherType=Searchers.GOOGLE;

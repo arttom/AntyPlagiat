@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Klasa implementująca interfejs Searcher zastępująca klasę GoogleSearcher wyszukującą w testach.
+ * Klasa implementująca interfejs Searcher zastępująca klasy Searcher wyszukującą w testach.
  */
 public class SearcherMOK implements Searcher{
     /**
-     * Zaślepka do testów zamiast getNumberOfResult klasy GoogleSearcher
+     * Zaślepka do testów klas implementujących Searcher
      * @param s - wyszukiwany tekst
      * @return - losowa wartość określająca liczbę znalezonych zapytań
      * @throws pl.atom.utils.SearchException - nie wyrzuca. Dodane aby było tożsame z getNumberOfResult

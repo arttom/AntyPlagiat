@@ -283,12 +283,19 @@ public class PlagiarismChecker {
         }
     }
 
+    /**
+     * Skracanie tekstu do ostatniej wyszukiwanej frazy
+     */
     private void cutText() {
         int lastPhrasePlace=getLastPhrase();
         textToCheck=textToCheck.substring(0,lastPhrasePlace);
         textToCheck=textToCheck+searchPhrases.getLast();
     }
 
+    /**
+     * Zwraca miejsce w tekście ostatniej wyszukiwanej frazy
+     * @return
+     */
     private int getLastPhrase() {
         int place=0;
         for(String s:searchPhrases){

@@ -259,6 +259,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Inicjalizacja GUI
+     */
     public void initialize() {
         textField.setWrapText(true);
         ToggleGroup group=new ToggleGroup();
