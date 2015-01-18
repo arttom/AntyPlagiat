@@ -2,7 +2,7 @@
 <project version="4">
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/src/pl/atom/links/LinksController.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/pl/atom/links/URLOpener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/pl/atom/links/WindowsAndGnomeURLOpener.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/pl/atom/punctuations/PunctuationMark.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/pl/atom/punctuations/PunctuationMarksTypeAndPlace.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/pl/atom/utils/FileReaderToText.java" charset="UTF-8" />

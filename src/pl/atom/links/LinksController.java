@@ -5,10 +5,10 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import pl.atom.utils.Searchers;
 
+import java.awt.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -52,10 +52,21 @@ public class LinksController {
                 hyperlink.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        URLOpener urlOpener;
                         try {
-                            URLOpener.openURL("http://google.pl/search?q=" + URLEncoder.encode(query, "UTF-8"));
+                            if(Desktop.isDesktopSupported()) urlOpener=new WindowsAndGnomeURLOpener();
+                            else urlOpener=new MacOSorLinuxURLOpener();
+                            urlOpener.openURL("http://google.pl/search?q=" + URLEncoder.encode(query, "UTF-8"));
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
+                        } catch (NoDesktopSupportedException e) {
+                            e.printStackTrace();
+                            Dialogs.create()
+                                    .owner(this)
+                                    .title("Niewspierany system")
+                                    .masthead(null)
+                                    .message("Konfiguracja systemowa nie pozwala na otwarcie przeglądarki.")
+                                    .showError();
                         }
                     }
                 });
